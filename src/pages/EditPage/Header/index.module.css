@@ -1,0 +1,52 @@
+.main {
+  z-index: 99999;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  height: 64px;
+  line-height: 64px;
+  margin-top: -64px;
+  text-align: center;
+  color: #fff;
+  background-color: #000;
+}
+.main .item {
+  position: relative;
+  display: flex;
+  justify-items: center;
+  cursor: default;
+  padding: 0 14px;
+  text-align: center;
+}
+.main .item:hover {
+  background-color: #0057ff;
+}
+.main .item.release {
+  width: 100px;
+  background-color: #0057ff;
+}
+.main .item.release:hover {
+  background-color: #ffe331;
+}
+.main .item.release:hover span {
+  color: black;
+}
+.main .item .icon {
+  font-size: 22px;
+}
+.main .item .nextStep {
+  display: inline-block;
+  transform: rotateY(180deg);
+}
+.main .item .shortKey {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 10px;
+  color: #999;
+}
