@@ -11,6 +11,12 @@ const useEditStore = create(
   }))
 );
 
+export const clearCanvas=()=>{
+  useEditStore.setState((draft)=>{
+    draft.canvas=getDefaultCanvas()
+  })
+}
+
 export const addCmp = (_cmp: ICmp) => {
   useEditStore.setState((draft) => {
     draft.canvas.cmps.push({..._cmp, key: getOnlyKey()});

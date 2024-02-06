@@ -1,4 +1,4 @@
-import useEditStore, {addCmp, fetchCanvas} from "src/store/editStore";
+import useEditStore, {addCmp, clearCanvas, fetchCanvas} from "src/store/editStore";
 import styles from "./index.module.less";
 import Cmp from "../Cmp";
 import { useCanvasId } from "src/store/hooks";
@@ -12,6 +12,8 @@ export default function Canvas() {
   useEffect(() => {
     if (id) {
       fetchCanvas(id);
+    }else{
+      clearCanvas()
     }
   }, []);
   const onDrop = (e:any) => {
