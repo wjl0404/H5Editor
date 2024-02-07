@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import {immer} from "zustand/middleware/immer";
-import {EditStoreState, EditStoreAction, ICanvas, ICmp} from "./editStoreTypes";
+import {EditStoreState, EditStoreAction, ICanvas, ICmp,Style} from "./editStoreTypes";
 import {getOnlyKey} from "src/utils";
 import Axios from "src/request/axios";
 import {getCanvasByIdEnd, saveCanvasEnd} from "src/request/end";
@@ -92,6 +92,19 @@ export const setCmpSelected=(index:number)=>{
     });
   }
 }
+
+// 修改组件属性
+// 根据改变的量来修改
+export const updateAssemblyCmpsByDistance = (newStyle: Style) => {
+  useEditStore.setState((draft) => {
+    draft.assembly.forEach((index) => {
+      const cmp = draft.canvas.cmps[index];
+      for (const key in newStyle) {
+        cmp.style[key] += newStyle[key];
+      }
+    });
+  });
+};
 
 
 export default useEditStore;

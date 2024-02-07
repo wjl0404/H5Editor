@@ -1,11 +1,6 @@
 .main {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  padding: 50px 0;
-  text-align: center;
-}
-.main .cmps {
   position: absolute;
-  overflow: hidden;
+  cursor: move;
+  border: solid 2px red;
+  box-sizing: border-box;
 }
