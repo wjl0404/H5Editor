@@ -8,18 +8,21 @@ import {getCanvasByIdEnd, saveCanvasEnd} from "src/request/end";
 const useEditStore = create(
   immer<EditStoreState & EditStoreAction>((set) => ({
     canvas: getDefaultCanvas(),
+    assembly:new Set()
   }))
 );
 
 export const clearCanvas=()=>{
   useEditStore.setState((draft)=>{
     draft.canvas=getDefaultCanvas()
+    draft.assembly.clear()
   })
 }
 
 export const addCmp = (_cmp: ICmp) => {
   useEditStore.setState((draft) => {
     draft.canvas.cmps.push({..._cmp, key: getOnlyKey()});
+    draft.assembly = new Set([draft.canvas.cmps.length - 1]);
   });
 };
 
@@ -49,6 +52,47 @@ export const fetchCanvas = async (id: number) => {
     });
   }
 };
+
+
+// 选中组件
+// 选中所有组件
+export const setAllCmpsSelected = () => {
+  useEditStore.setState((draft) => {
+    let len = draft.canvas.cmps.length;
+    draft.assembly = new Set(Array.from({length: len}, (a, b) => b));
+  });
+};
+
+// 选中多个组件 已经选中则取消，未选中加入
+export const setCmpsSelected = (indexes: Array<number>) =>{
+  useEditStore.setState((draft)=>{
+    if(indexes){
+      indexes.forEach((index)=>{
+        if(draft.assembly.has(index)){
+          draft.assembly.delete(index)
+        }else{
+          draft.assembly.add(index)
+        }
+      })
+    }
+  })
+}
+
+// 选中单个组件 index==-1取消
+export const setCmpSelected=(index:number)=>{
+  if (index === -1) {
+    useEditStore.setState((draft) => {
+      if (draft.assembly.size > 0) {
+        draft.assembly.clear();
+      }
+    });
+  } else if (index > -1) {
+    useEditStore.setState((draft) => {
+      draft.assembly = new Set([index]);
+    });
+  }
+}
+
 
 export default useEditStore;
 
