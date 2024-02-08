@@ -3,7 +3,7 @@ import styles from "./index.module.less";
 import {isImgComponent, isTextComponent} from "../../LeftSider";
 import {Img, Text} from "./CmpDetail";
 import classNames from "classnames";
-import {omit, pick} from "lodash";
+import {omit, pick, transform} from "lodash";
 import {setCmpSelected, setCmpsSelected} from "src/store/editStore";
 import {memo} from "react";
 
@@ -17,7 +17,8 @@ const Cmp = memo((props: ICmpProps) => {
   const {cmp, index, isSelected} = props;
   const {style} = cmp;
 
-  const setSelected = (e:any) => {
+  const setSelected = (e:React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
     if (e.ctrlKey) {
       setCmpsSelected([index]);
     } else {
@@ -34,13 +35,15 @@ const Cmp = memo((props: ICmpProps) => {
   ]);
 
   const innerStyle = omit(style, "position", "top", "left");
+  const transform = `rotate(${style.transform}deg)`;
+
 
   console.log("cmp render"); //sy-log
 
   return (
     <div
       className={classNames(styles.main, isSelected && "selectedBorder")}
-      style={outerStyle}
+      style={{...outerStyle,transform}}
       onClick={setSelected}>
       <div className={styles.inner} style={{...innerStyle, zIndex: index}}>
         {cmp.type === isTextComponent && <Text {...cmp} />}
