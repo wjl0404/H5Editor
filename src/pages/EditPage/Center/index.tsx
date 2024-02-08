@@ -2,6 +2,7 @@ import React, { KeyboardEvent } from "react";
 import styles from "./index.module.less";
 import Canvas from "./Canvas";
 import {setAllCmpsSelected, setCmpSelected} from "src/store/editStore";
+import Zoom from "./Zoom";
 
 export default function Center() {
   const keyDown = (e:any) => {
@@ -26,6 +27,7 @@ export default function Center() {
       }}
       onKeyDown={keyDown}>
       <Canvas />
+      <Zoom />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import Axios from "src/request/axios";
 import {getCanvasByIdEnd, saveCanvasEnd} from "src/request/end";
 
 const useEditStore = create(
-  immer<EditStoreState & EditStoreAction>((set) => ({
+  immer<EditStoreState & EditStoreAction>(() => ({
     canvas: getDefaultCanvas(),
     assembly:new Set()
   }))

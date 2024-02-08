@@ -8,8 +8,10 @@ import Cmp from "../Cmp";
 import {useEffect} from "react";
 import {useCanvasId} from "src/store/hooks";
 import EditBox from "../EditBox";
+import useZoomStore from "src/store/zoomStore";
 
 export default function Canvas() {
+  const zoom = useZoomStore((state) => state.zoom);
   const [canvas, assembly] = useEditStore((state) => [
     state.canvas,
     state.assembly,
@@ -25,7 +27,7 @@ export default function Canvas() {
     }
   }, []);
 
-  const onDrop = (e:any) => {
+  const onDrop = (e) => {
     // 1. 读取被拖拽的组件信息
     let dragCmp = e.dataTransfer.getData("drag-cmp");
     if (!dragCmp) {
@@ -39,11 +41,14 @@ export default function Canvas() {
 
     const canvasDomPos = {
       top: 114,
-      left: (document.body.clientWidth - style.width) / 2,
+      left: document.body.clientWidth / 2 - (style.width / 2) * (zoom / 100),
     };
 
     let disX = endX - canvasDomPos.left;
     let disY = endY - canvasDomPos.top;
+
+    disX = disX * (100 / zoom);
+    disY = disY * (100 / zoom);
 
     dragCmp.style.left = disX - dragCmp.style.width / 2;
     dragCmp.style.top = disY - dragCmp.style.height / 2;
@@ -52,7 +57,7 @@ export default function Canvas() {
     addCmp(dragCmp);
   };
 
-  const allowDrop = (e:any) => {
+  const allowDrop = (e) => {
     e.preventDefault();
   };
   console.log("canvas render", cmps); //sy-log
@@ -60,7 +65,10 @@ export default function Canvas() {
     <div
       id="canvas"
       className={styles.main}
-      style={canvas.style}
+      style={{
+        ...canvas.style,
+        transform: `scale(${zoom / 100})`,
+      }}
       onDrop={onDrop}
       onDragOver={allowDrop}>
       <EditBox />

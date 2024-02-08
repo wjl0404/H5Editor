@@ -1,0 +1,28 @@
+.zoom {
+  position: fixed;
+  right: 400px;
+  bottom: 20px;
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+  color: #500202;
+}
+.zoom li {
+  padding: 0 4px;
+}
+.zoom .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ffe331;
+  cursor: pointer;
+}
+.zoom .num {
+  font-size: 12px;
+}
+.zoom .num input {
+  display: inline-block;
+  width: 50px;
+  border: none;
+  text-align: center;
+}
