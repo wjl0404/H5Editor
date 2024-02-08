@@ -1,28 +1,35 @@
-import useEditStore, { updateAssemblyCmpsByDistance } from "src/store/editStore";
+import useEditStore, {updateAssemblyCmpsByDistance} from "src/store/editStore";
 import styles from "./index.module.less";
-import {throttle} from 'lodash'
+import {throttle} from "lodash";
+import useZoomStore from "src/store/zoomStore";
+import StretchDots from "./StretchDots";
 
 export default function EditBox() {
+  const zoom = useZoomStore((state) => state.zoom);
   const [cmps, assembly] = useEditStore((state) => [
     state.canvas.cmps,
     state.assembly,
   ]);
 
-  const onMouseDownOfCmp = (e:any) =>{
-    let startX=e.pageX;
-    let startY=e.pageY;
-    // 移动
-    const move=throttle((e)=>{
-      const x=e.pageX;
-      const y=e.pageY;
-      // 根据移动修改组件属性
-      const distX=x-startX;
-      const distY=y-startY;
-      updateAssemblyCmpsByDistance({top:distY,left:distX})
-      // 更新起点
-      startX=x;
-      startY=y;
-    },10);
+  const onMouseDownOfCmp = (e:any) => {
+    let startX = e.pageX;
+    let startY = e.pageY;
+
+    const move = throttle((e) => {
+      const x = e.pageX;
+      const y = e.pageY;
+
+      let disX = x - startX;
+      let disY = y - startY;
+
+      disX = disX * (100 / zoom);
+      disY = disY * (100 / zoom);
+
+      updateAssemblyCmpsByDistance({top: disY, left: disX});
+
+      startX = x;
+      startY = y;
+    }, 50);
 
     const up = () => {
       document.removeEventListener("mousemove", move);
@@ -31,7 +38,7 @@ export default function EditBox() {
 
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", up);
-  }
+  };
 
   const size = assembly.size;
   if (size === 0) {
@@ -68,6 +75,8 @@ export default function EditBox() {
         width,
         height,
       }}
-      onMouseDown={onMouseDownOfCmp}></div>
+      onMouseDown={onMouseDownOfCmp}>
+      <StretchDots zoom={zoom} style={{width, height}} />
+    </div>
   );
 }

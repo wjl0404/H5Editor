@@ -1,0 +1,8 @@
+.stretchDot {
+  z-index: 9999;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: rgba(0, 87, 255, 0.8);
+  border-radius: 50%;
+}

@@ -27,7 +27,7 @@ export default function Canvas() {
     }
   }, []);
 
-  const onDrop = (e) => {
+  const onDrop = (e:any) => {
     // 1. 读取被拖拽的组件信息
     let dragCmp = e.dataTransfer.getData("drag-cmp");
     if (!dragCmp) {
@@ -57,7 +57,7 @@ export default function Canvas() {
     addCmp(dragCmp);
   };
 
-  const allowDrop = (e) => {
+  const allowDrop = (e:any) => {
     e.preventDefault();
   };
   console.log("canvas render", cmps); //sy-log
