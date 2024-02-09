@@ -4,6 +4,8 @@
 }
 .main .inner {
   box-sizing: border-box;
+  overflow: hidden;
+  white-space: pre-wrap;
 }
 .main img {
   width: 100%;
