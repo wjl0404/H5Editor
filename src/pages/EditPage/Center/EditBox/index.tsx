@@ -1,4 +1,5 @@
 import useEditStore, {
+  recordCanvasChangeHistory_2,
   updateAssemblyCmpsByDistance,
   updateSelectedCmpAttr,
   updateSelectedCmpStyle,
@@ -22,7 +23,7 @@ export default function EditBox() {
   const selectedCmp = cmps[Array.from(assembly)[0]];
   const [textareaFocused, setTextareaFocused] = useState(false);
 
-  const onMouseDownOfCmp = (e) => {
+  const onMouseDownOfCmp = (e:any) => {
     let startX = e.pageX;
     let startY = e.pageY;
 
@@ -43,6 +44,7 @@ export default function EditBox() {
     }, 50);
 
     const up = () => {
+      recordCanvasChangeHistory_2();
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
     };
