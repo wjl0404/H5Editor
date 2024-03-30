@@ -64,7 +64,7 @@ export default function Header() {
       }
 
       // 跳转生成器项目页
-      window.open("http://builder.codebus.tech?id=" + _id);
+      window.open("http://localhost:3000?id=" + _id);
     });
   };
 

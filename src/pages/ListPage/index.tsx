@@ -131,7 +131,7 @@ export default function ListPage() {
                     <a
                       target="_blank"
                       href={
-                        "http://builder.codebus.tech?id=" + id + "&preview"
+                        "http://localhost:3000?id=" + id + "&preview"
                       }>
                       线下预览查看（切移动端）
                     </a>
@@ -141,7 +141,7 @@ export default function ListPage() {
                   <>
                     <a
                       target="_blank"
-                      href={"http://builder.codebus.tech?id=" + id}>
+                      href={"http://localhost:3000?id=" + id}>
                       线上查看（切移动端）
                     </a>
                     <Button onClick={() => unpublish(id)}>下架</Button>
