@@ -2,6 +2,7 @@ import useEditStore, {
   addCmp,
   clearCanvas,
   fetchCanvas,
+  initCanvas,
 } from "src/store/editStore";
 import styles from "./index.module.less";
 import Cmp from "../Cmp";
@@ -16,7 +17,7 @@ export default function Canvas() {
     state.canvas,
     state.assembly,
   ]);
-  const {cmps, style} = canvas;
+  const {cmps, style} = canvas.content;
 
   const id = useCanvasId();
   useEffect(() => {
@@ -24,6 +25,9 @@ export default function Canvas() {
       fetchCanvas(id);
     } else {
       clearCanvas();
+    }
+    return ()=>{
+      initCanvas()
     }
   }, []);
 
@@ -66,12 +70,12 @@ export default function Canvas() {
       id="canvas"
       className={styles.main}
       style={{
-        ...canvas.style,
+        ...canvas.content.style,
         backgroundImage: `url(${style.backgroundImage})`,
         transform: `scale(${zoom / 100})`,
       }}
       onDrop={onDrop}
-      onDragOver={allowDrop}>
+      onDragOver={allowDrop} onContextMenu={()=>false}>
       <EditBox />
       {cmps.map((item, index) => (
         <Cmp

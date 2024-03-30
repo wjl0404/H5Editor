@@ -3,8 +3,14 @@ import React from "react";
 // export type Style=React.CSSProperties
 export type Style=any
 
-export interface ICanvas{
+export interface ICanvas {
+  id: null | number;
   title: string;
+  type: "content" | "template"; // 页面还是模板页
+  content: IContent;
+}
+
+export interface IContent {
   style: Style;
   cmps: Array<ICmpWithKey>;
 }

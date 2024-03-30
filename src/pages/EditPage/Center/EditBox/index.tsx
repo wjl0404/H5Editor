@@ -11,17 +11,20 @@ import StretchDots from "./StretchDots";
 import {isTextComponent} from "../../LeftSider";
 import {useState} from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import Menu from "../Menu";
+import React from "react";
 
 export default function EditBox() {
   const zoom = useZoomStore((state) => state.zoom);
   const [cmps, assembly] = useEditStore((state) => [
-    state.canvas.cmps,
+    state.canvas.content.cmps,
     state.assembly,
   ]);
 
   // 只有单个文本组件的时候才会用到
   const selectedCmp = cmps[Array.from(assembly)[0]];
   const [textareaFocused, setTextareaFocused] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const onMouseDownOfCmp = (e:any) => {
     let startX = e.pageX;
@@ -91,9 +94,13 @@ export default function EditBox() {
       onMouseDown={onMouseDownOfCmp}
       onClick={(e) => {
         e.stopPropagation();
+        setShowMenu(false)
       }}
       onDoubleClick={() => {
         setTextareaFocused(true);
+      }}
+      onContextMenu={(e)=>{
+        setShowMenu(true)
       }}>
       {size === 1 &&
         selectedCmp.type === isTextComponent &&
@@ -114,7 +121,12 @@ export default function EditBox() {
             }}
           />
         )}
-
+      {showMenu && <Menu
+          style={{left: width}}
+          assemblySize={size}
+          cmps={cmps}
+          selectedIndex={Array.from(assembly)[0]}
+        />}
       <StretchDots zoom={zoom} style={{width, height}} />
     </div>
   );
