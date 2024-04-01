@@ -1,6 +1,6 @@
 import axios from "./axios";
-// export const end = "//www.bubucuo.cn";
-export const end = ""; 
+
+export const end = "http://190.92.232.153:4000"; 
 
 // 注册 post
 export const registerEnd = end + "/api/register";
