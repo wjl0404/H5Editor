@@ -131,7 +131,7 @@ export default function ListPage() {
                     <a
                       target="_blank"
                       href={
-                        "http://localhost:3000?id=" + id + "&preview"
+                        "http://190.92.232.153:5001?id=" + id + "&preview"
                       }>
                       线下预览查看（切移动端）
                     </a>
@@ -141,7 +141,7 @@ export default function ListPage() {
                   <>
                     <a
                       target="_blank"
-                      href={"http://localhost:3000?id=" + id}>
+                      href={"http://190.92.232.153:5001?id=" + id}>
                       线上查看（切移动端）
                     </a>
                     <Button onClick={() => unpublish(id)}>下架</Button>
